@@ -10,58 +10,17 @@ struct list
     list *prev;
 };
 
-void swapListElements(list *&insert, list *&point)
-{
-    list *pointP = point->prev;
-    list *insertN = insert->next;
-    if (insert->prev == NULL && point->next == NULL)
-    {
-        if (insert->next == point && point->prev == insert)
-        {
-            point->prev = NULL;
-            point->next = insert;
-            insert->next = NULL;
-            insert->prev = point;
-        }
-        else
-        {
-            point->prev = NULL;
-            point->next = insert;
-            insert->prev = point;
-            pointP->next = NULL;
-        }
-
-        return;
+void swapListElements(list *&inserBefore, list *& whatInsert){
+    whatInsert->prev->next = whatInsert->next;
+    if (whatInsert->next != NULL){
+        whatInsert->next->prev = whatInsert->prev;
     }
-    if (insert->prev == NULL)
-    {
-        list *pointN = point->next;
-        insert->prev = point;
-        pointN->prev = pointP;
-        pointP->next = pointN;
-        point->prev = NULL;
-        point->next = insert;
-        return;
+    whatInsert->prev = inserBefore->prev;
+    if (inserBefore->prev != NULL){
+        inserBefore->prev->next = whatInsert;
     }
-    if (point->next == NULL)
-    {
-        list *insertP = insert->prev;
-        insert->prev = point;
-        point->next = insert;
-        point->prev = insertP;
-        insertP->next = point;
-        pointP->next = NULL;
-        return;
-    }
-    list *insertP = insert->prev;
-    list *pointN = point->next;
-    pointP->next = pointN;
-    pointN->prev = pointP;
-    point->next = insert;
-    point->prev = insertP;
-    insert->prev = point;
-    insertP->next = point;
-    return;
+    inserBefore->prev = whatInsert;
+    whatInsert->next = inserBefore;
 }
 
 void insertSort(list *&begin, list *&end)
@@ -100,7 +59,7 @@ int main()
     // {
     // int N = rand() % 14 + 1;
     int N = 4;
-    string array[15] = {"6", "5", "1", "3", "8", "7", "2", "4"};
+    string array[15] = {"4", "3", "2", "1", "8", "7", "2", "4"};
     // for (int i = 0; i < N; i++)
     // {
     //     int length = rand() % 10;
